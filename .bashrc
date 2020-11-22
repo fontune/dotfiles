@@ -4,32 +4,32 @@
 
 [[ $- != *i* ]] && return
 
-colors() {
-	local fgc bgc vals seq0
-
-	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
-	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
-	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
-	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
-
-	# foreground colors
-	for fgc in {30..37}; do
-		# background colors
-		for bgc in {40..47}; do
-			fgc=${fgc#37} # white
-			bgc=${bgc#40} # black
-
-			vals="${fgc:+$fgc;}${bgc}"
-			vals=${vals%%;}
-
-			seq0="${vals:+\e[${vals}m}"
-			printf "  %-9s" "${seq0:-(default)}"
-			printf " ${seq0}TEXT\e[m"
-			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-		done
-		echo; echo
-	done
-}
+#colors() {
+#	local fgc bgc vals seq0
+#
+#	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
+#	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
+#	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
+#	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
+#
+#	# foreground colors
+#	for fgc in {30..37}; do
+#		# background colors
+#		for bgc in {40..47}; do
+#			fgc=${fgc#37} # white
+#			bgc=${bgc#40} # black
+#
+#			vals="${fgc:+$fgc;}${bgc}"
+#			vals=${vals%%;}
+#
+#			seq0="${vals:+\e[${vals}m}"
+#			printf "  %-9s" "${seq0:-(default)}"
+#			printf " ${seq0}TEXT\e[m"
+#			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+#		done
+#		echo; echo
+#	done
+#}
 
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
@@ -146,9 +146,18 @@ export PS1="\[\033[38;5;1m\][\[$(tput sgr0)\]\[\033[38;5;11m\]\u\[$(tput sgr0)\]
 
 # ALIASES #
 
+alias QuickWall='QuickWall --setter feh'
 alias v='vim'
 alias vi='vim'
 alias py='python'
 alias py2='python2'
 alias q='exit'
 alias sd='shutdown now'
+
+# perl exports
+PATH="/home/sansfont/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/sansfont/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/sansfont/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/sansfont/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/sansfont/perl5"; export PERL_MM_OPT;
+
